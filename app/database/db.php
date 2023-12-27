@@ -4,13 +4,14 @@
 session_start();
 require('connect.php');
 
-// test
-//function tt($value)
-//{
-//    echo '<pre>';
-//    print_r($value);
-//    echo '</pre>';
-//}
+ //  test
+function tt($value)
+{
+    echo '<pre>';
+    print_r($value);
+    echo '</pre>';
+    exit();
+}
 
 // Проверка выполнения запроса к БД
 function dbCheckError($query)
@@ -154,4 +155,57 @@ function delete($table, $id)
 //    'user_email' => 'admin@test.com',
 //    'user_password' => '0000'
 //];
+
+// ВЫборка записей (posts) с автором в админку
+
+function selectAllFromPostsWithUsers($table1,$table2){
+    global $pdo;
+
+    $sql = "
+SELECT 
+    t1.id,
+    t1.title,
+    t1.img,
+    t1.content,
+    t1.status,
+    t1.id_topic,
+    t1.created_date,
+    t2.user_name
+FROM $table1 AS t1 JOIN $table2 AS t2 ON t1.id_user = t2.id";
+
+    $query = $pdo->prepare($sql);
+    $query->execute();
+    dbCheckError($query);
+
+    return $query->fetchAll();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -1,5 +1,5 @@
 <?php include "path.php";
-include "app/database/db.php";
+include "app/controllers/topics.php";
 ?>
 
 
@@ -19,7 +19,7 @@ include "app/database/db.php";
 </head>
 <body>
 <!--HEADER-->
-<?php include ("app/include/header.php");?>
+<?php include("app/include/header.php"); ?>
 
 <!-- блок карусели START -->
 <div class="container">
@@ -126,7 +126,7 @@ include "app/database/db.php";
             </div>
         </div>
 
-        <!-- sidebar CONTENT -->
+        <!-- SIDEBAR CONTENT -->
         <div class="sidebar col-md-3 col-12">
             <div class="section search">
                 <h3>Поиск</h3>
@@ -137,11 +137,10 @@ include "app/database/db.php";
             <div class="section topics">
                 <h3>Категории</h3>
                 <ul>
-                    <li><a href="#">Программирование</a></li>
-                    <li><a href="#">Дизайн</a></li>
-                    <li><a href="#">Визуализация</a></li>
-                    <li><a href="#">Кейсы</a></li>
-                    <li><a href="#">Мотивация</a></li>
+                    <?php
+                    foreach ($topics as $key => $topic): ?>
+                        <li><a href="#"><?= $topic['name']; ?></a></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>
@@ -150,8 +149,7 @@ include "app/database/db.php";
 <!-- main END -->
 
 <!-- FOOTER -->
-<?php include ("app/include/footer.php");?>
-
+<?php include("app/include/footer.php"); ?>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"

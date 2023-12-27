@@ -1,10 +1,10 @@
 <?php
 include "../../path.php";
-//include "app/database/db.php";
-session_start();
+include "../../app/controllers/posts.php";
 ?>
+
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,42 +25,53 @@ session_start();
     <!-- SIDEBAR -->
     <?php include("../../app/include/sidebar-admin.php"); ?>
 
-        <div class="posts col-9">
-            <div class="button row">
-                <a href="<?php echo BASE_URL . "admin/posts/create.php" ?>" class="col-3 btn btn-success">Создать</a>
-                <span class="col-1"></span>
-                <a href="<?php echo BASE_URL . "admin/posts/index.php" ?>" class="col-3 btn btn-warning">Редактировать</a>
-            </div>
-            <h2>Создание записи</h2>
-
-            <div class="row add-post">
-                <form action="create.php" method="post">
-                    <div class="col mb-4">
-                        <input type="text" class="form-control" placeholder="Title" aria-label="Название статьи">
-                    </div>
-                    <div class="col">
-                        <label for="editor" class="form-label">Содержимое записи</label>
-                        <textarea  class="form-control" id="editor" rows="6"></textarea>
-                    </div>
-                    <div class="input-group col mb-4 mt-4">
-                        <input type="file" class="form-control" id="inputGroupFile">
-                        <label class="input-group-text" for="inputGroupFile">Upload</label>
-                    </div>
-                    <select class="form-select mb-4" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
-                    <div class="col mb-4">
-                        <button class="btn btn-primary" type="submit">Сохранить запись</button>
-                    </div>
-
-                </form>
-            </div>
-
+    <div class="posts col-9">
+        <div class="button row">
+            <a href="<?php echo BASE_URL . "admin/posts/create.php" ?>" class="col-3 btn btn-success">Создать</a>
+            <span class="col-1"></span>
+            <a href="<?php echo BASE_URL . "admin/posts/index.php" ?>" class="col-3 btn btn-warning">Редактировать</a>
         </div>
+        <h2>Создание записи</h2>
+        <div class="w-100"></div>
+        <div class="mb-12 col-12 col-md-12 err">
+            <p><?= $errorMsg ?></p>
+        </div>
+        <div class="w-100"></div>
+        <div class="row add-post">
+            <form action="create.php" method="post">
+                <div class="col mb-4">
+                    <input type="text" name="title" class="form-control" placeholder="Title"
+                           aria-label="Название статьи">
+                </div>
+                <div class="col">
+                    <label for="editor" class="form-label">Содержимое записи</label>
+                    <textarea name="content" class="form-control" id="editor" rows="6"></textarea>
+                </div>
+                <div class="input-group col mb-4 mt-4">
+                    <input type="file" name="img" class="form-control" id="inputGroupFile">
+                    <label class="input-group-text" for="inputGroupFile">Upload</label>
+                </div>
+                <select name="topic" class="form-select mb-4" aria-label="Default select example">
+                    <option selected>Выберите категорию:</option>
+                    <?php
+                    foreach ($topics as $key => $topic): ?>
+                        <option value="<?= $topic['id']; ?>"><?= $topic['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="publish" checked>
+                    <label class="form-check-label" for="flexCheckChecked">Publish</label>
+                </div>
+
+                <div class="col col-6">
+                    <button name="add_post" class="btn btn-primary" type="submit">Добавить запись</button>
+                </div>
+
+            </form>
+        </div>
+
     </div>
+</div>
 </div>
 
 

@@ -1,4 +1,5 @@
 <?php
+
 include "../../path.php";
 include "../../app/controllers/topics.php";
 session_start();
@@ -33,23 +34,31 @@ session_start();
                 <a href="<?php echo BASE_URL . "admin/topics/index.php" ?>"
                    class="col-3 btn btn-warning">Редактировать</a>
             </div>
-            <h2>Управление категориями</h2>
-            <div class="row title-table">
-
-                <div class="col-1">ID</div>
-                <div class="col-5">Название</div>
-                <div class="col-4">Управление</div>
+            <h2>Обновление категории</h2>
+            <div class="w-100"></div>
+            <div class="mb-12 col-12 col-md-12 err">
+                <p><?= $errorMsg ?></p>
             </div>
-            <?php
-            foreach ($topics as $key => $topic):        ?>
+            <div class="w-100"></div>
+            <div class="row add-post">
+                <form action="edit.php" method="post">
+                    <input name="id" type="hidden" value="<?= $id; ?>">
+                    <div class="col mb-4">
+                        <input type="text" name="name" value="<?= $name; ?>" class="form-control"
+                               placeholder="Имя категории" aria-label="Имя категории">
+                    </div>
+                    <div class="col mb-4">
+                        <label for="content" class="form-label">Описание категории</label>
+                        <textarea class="form-control" id="content" name="description"
+                                  rows="6"><?= $description; ?></textarea>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-primary" name="topic-edit" type="submit">Обновить категорию</button>
+                    </div>
 
-                <div class="row post">
-                    <div class="id col-1"><?= $key + 1; ?></div>
-                    <div class="title col-5"><?= $topic['name']; ?></div>
-                    <div class="red col-2"><a href="edit.php?id=<?= $topic['id']; ?>">edit</a></div>
-                    <div class="del col-2"><a href="edit.php?del_id=<?= $topic['id']; ?>">delete</a></div>
-                </div>
-            <?php endforeach; ?>
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
@@ -65,5 +74,6 @@ session_start();
 <script src="https://kit.fontawesome.com/11907d8763.js" crossorigin="anonymous"></script>
 </body>
 </html>
+
 
 
