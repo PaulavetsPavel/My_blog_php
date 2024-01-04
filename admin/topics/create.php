@@ -36,7 +36,8 @@ include "../../app/controllers/topics.php";
             <h2>Создание категории</h2>
             <div class="w-100"></div>
             <div class="mb-12 col-12 col-md-12 err">
-                <p><?= $errorMsg ?></p>
+                <!--  Вывод массива с ошибками -->
+                <?php include("../../app/helps/error_info.php"); ?>
             </div>
             <div class="w-100"></div>
             <div class="row add-post">

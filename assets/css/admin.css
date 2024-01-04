@@ -237,11 +237,21 @@ SIDEBAR
     font-weight: bold;
 }
 
-/*.add-post form div {*/
-/*    margin: 2rem 0;*/
 
-/*}*/
+/*
+ERRORS
+*/
 
+.err{
+    padding: 1rem 0;
+
+}
+.err ul {
+    list-style-type: none;
+    color: red;
+    font-weight: 500;
+    padding-left: 10px;
+}
 
 
 

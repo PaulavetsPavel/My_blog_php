@@ -1,10 +1,10 @@
 <?php
-include __DIR__ . "/../../app/database/db.php";
+include SITE_ROOT . "/app/database/db.php";
 
 // Получение всех категорий для html
 $topics = selectAll('topics');
 
-$errorMsg = '';
+$errorMsg = [];
 $id = '';
 $name = '';
 $description = '';
@@ -19,13 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['topic-create'])) {
     $description = trim($_POST['description']);
 
     if ($name === '' || $description === '') {
-        $errorMsg = 'Не все поля заполнены!';
+        array_push($errorMsg, 'Не все поля заполнены!');
     } else if (mb_strlen($name, 'utf8') < 2) {
-        $errorMsg = 'Название должно быть более 2 символов!';
+        array_push($errorMsg, 'Название должно быть более 2 символов!');
     } else {
         $existence = selectOne('topics', ['name' => $name]);
         if ($existence['name'] === $name) {
-            $errorMsg = 'Такая категория уже существует!';
+            array_push($errorMsg, 'Такая категория уже существует!');
         } else {
 
             $topic = [
@@ -63,9 +63,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['topic-edit'])) {
     $description = trim($_POST['description']);
 
     if ($name === '' || $description === '') {
-        $errorMsg = 'Не все поля заполнены!';
+        array_push($errorMsg,'Не все поля заполнены!');
     } else if (mb_strlen($name, 'utf8') < 2) {
-        $errorMsg = 'Название должено быть более 2 символов!';
+        array_push($errorMsg,'Название должено быть более 2 символов!');
     } else {
         $topic = [
             'name' => $name,

@@ -1,24 +1,49 @@
 <?php
 
-include __DIR__ . "/../../app/database/db.php";
+include SITE_ROOT . "/app/database/db.php";
 
-// Получение всех категорий для html
-$topics = selectAll('topics');
+if (!$_SESSION) {
+    header('location:' . BASE_URL . 'log.php');
+}
 
-$posts = selectAll('posts');
-$postsAdm = selectAllFromPostsWithUsers('posts', 'users');
-$errorMsg = '';
+$errorMsg = [];
 $id = '';
 $title = '';
 $content = '';
 $img = '';
 $topic = '';
 
+// Получение всех категорий для html
+$topics = selectAll('topics');
+$posts = selectAll('posts');
+$postsAdm = selectAllFromPostsWithUsers('posts', 'users');
 
 // Код для формы создания записи
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_post'])) {
 
+    if (!empty($_FILES['img']['name'])) {
+        $imgName = time() . "_" . $_FILES['img']['name'];
+        $fileTmpName = $_FILES['img']['tmp_name'];
+        $destination = ROOT_PATH . "\assets\images\posts\\" . $imgName;
+        $fileType = $_FILES['img']['type'];
+
+        if (strpos($fileType, 'image') === false) {
+
+            array_push($errorMsg, "Файл не является изображением!");
+
+        } else {
+            $result = move_uploaded_file($fileTmpName, $destination);
+            if ($result) {
+                $_POST['img'] = $imgName;
+            } else {
+                array_push($errorMsg, 'Ошибка загрузки изображения!');
+            }
+        }
+
+    } else {
+        array_push($errorMsg, 'Ошибка получения изображения!');
+    }
     // trim удаление пробелов
     $title = trim($_POST['title']);
     $content = trim($_POST['content']);
@@ -26,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_post'])) {
     $publish = $_POST['publish'] !== null ? 1 : 0;
 
     if ($title === '' || $content === '' || $topic === '') {
-        $errorMsg = 'Не все поля заполнены!';
+        array_push($errorMsg, 'Не все поля заполнены!');
     } else if (mb_strlen($title, 'utf8') < 7) {
-        $errorMsg = 'Название должно быть более 7 символов!';
+        array_push($errorMsg, 'Название должно быть более 7 символов!');
     } else {
 
         $post = [
@@ -52,14 +77,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_post'])) {
 
 // Редактирование записи
 
-////if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
-////    $id = $_GET['id'];
-////    $topic = selectOne('topics', ['id' => $id]);
-////    $id = $topic['id'];
-////    $name = $topic['name'];
-////    $description = $topic['description'];
-////}
-//
+//if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
+//    $id = $_GET['id'];
+//    $topic = selectOne('topics', ['id' => $id]);
+//    $id = $topic['id'];
+//    $name = $topic['name'];
+//    $description = $topic['description'];
+//}
+
 //// Код для формы редактирования записи
 //
 //if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['topic-edit'])) {

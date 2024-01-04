@@ -34,18 +34,19 @@ include "../../app/controllers/posts.php";
         <h2>Создание записи</h2>
         <div class="w-100"></div>
         <div class="mb-12 col-12 col-md-12 err">
-            <p><?= $errorMsg ?></p>
+            <!--  Вывод массива с ошибками -->
+            <?php include("../../app/helps/error_info.php"); ?>
         </div>
         <div class="w-100"></div>
         <div class="row add-post">
-            <form action="create.php" method="post">
+            <form action="create.php" method="post" enctype="multipart/form-data">
                 <div class="col mb-4">
-                    <input type="text" name="title" class="form-control" placeholder="Title"
+                    <input type="text" name="title" value="<?=$title;?>" class="form-control" placeholder="Title"
                            aria-label="Название статьи">
                 </div>
                 <div class="col">
                     <label for="editor" class="form-label">Содержимое записи</label>
-                    <textarea name="content" class="form-control" id="editor" rows="6"></textarea>
+                    <textarea name="content" class="form-control" id="editor" rows="6"><?=$content;?></textarea>
                 </div>
                 <div class="input-group col mb-4 mt-4">
                     <input type="file" name="img" class="form-control" id="inputGroupFile">
@@ -59,7 +60,8 @@ include "../../app/controllers/posts.php";
                     <?php endforeach; ?>
                 </select>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="publish" checked>
+                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="publish"
+                           checked>
                     <label class="form-check-label" for="flexCheckChecked">Publish</label>
                 </div>
 

@@ -4,7 +4,7 @@
 session_start();
 require('connect.php');
 
- //  test
+//  test
 function tt($value)
 {
     echo '<pre>';
@@ -109,7 +109,7 @@ function insert($table, $params)
     }
 
     $sql = "INSERT INTO $table ($col) VALUES ($val)";
-     $query = $pdo->prepare($sql);
+    $query = $pdo->prepare($sql);
     $query->execute($params);
     dbCheckError($query);
 
@@ -158,7 +158,8 @@ function delete($table, $id)
 
 // ВЫборка записей (posts) с автором в админку
 
-function selectAllFromPostsWithUsers($table1,$table2){
+function selectAllFromPostsWithUsers($table1, $table2)
+{
     global $pdo;
 
     $sql = "
